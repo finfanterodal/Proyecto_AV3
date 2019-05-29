@@ -21,6 +21,10 @@ public class Usuario extends javax.swing.JFrame {
     
     MetodosUsuario m = new MetodosUsuario();
     
+    /**
+     *En el constructor, me conecto a la base de datos, creao la tabla usuarios
+     * y le inserto el administrador
+     */
     public Usuario() {
         initComponents();
         m.conectar();
@@ -28,6 +32,9 @@ public class Usuario extends javax.swing.JFrame {
         registrarAdmin();
     }
     
+    /**
+     *Método para insertar los datos del administrador a la tabla usuarios
+     */
     public void registrarAdmin(){
         String sql = "INSERT INTO usuarios VALUES(?,?,?)";
         try (Connection conn = m.conectar();
@@ -157,6 +164,8 @@ public class Usuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Evento del botón Registrar que inserta un cliente en la tabla usuarios con los datos
+    //de las cajas de texto. Si alguna de las cajas está vacía, no se ejecuta
     private void bRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegisterActionPerformed
         String c = tPasswd.getText();
         if(tUser.getText().isEmpty() || tPasswd.getText().isEmpty()){
@@ -167,6 +176,9 @@ public class Usuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bRegisterActionPerformed
 
+    //Evento del botón Cliente que busca al cliente en la tabla usuarios
+    //con ayuda de los datos de las cajas de texto
+    //Si lo encuentra, el cliente entrará en la tienda
     private void bClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientActionPerformed
         String user = tUser.getText();
         String passwd = tPasswd.getText();
@@ -179,6 +191,9 @@ public class Usuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bClientActionPerformed
 
+    //Evento del botón Administrador que busca al administrador en la tabla usuarios
+    //con ayuda de los datos de las cajas de texto
+    //Si lo encuentra, el administrador podrá administrar la tienda
     private void bAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAdminActionPerformed
         String user = tUser.getText();
         String passwd = tPasswd.getText();
