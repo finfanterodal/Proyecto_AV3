@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
  */
 public class MetodosUsuario {
     
+    /**
+     *
+     * @return
+     * 
+     * Método de conexión a la base de datos
+     */
     public Connection conectar() {
         String url = "jdbc:sqlite:tienda.db";
         Connection conn = null;
@@ -20,6 +26,10 @@ public class MetodosUsuario {
         return conn;
     }
     
+    /**
+     * Método que crea la tabla usuarios dónde se guardarán los datos de los
+     * clientes y el administrador que se quieran conectar a la tienda
+     */
     public void crearTablaUsuarios() {
         String sql1 = "DROP TABLE IF EXISTS usuarios;\n";
         String sql2 = "CREATE TABLE IF NOT EXISTS usuarios (\n"
@@ -36,6 +46,13 @@ public class MetodosUsuario {
         }
     }
     
+    /**
+     *
+     * @param usuario
+     * @param contraseña
+     * 
+     * Método para insertar usuarios de tipo cliente a la tabla usuarios
+     */
     public void registrarCliente(String usuario, String contraseña) {
         String sql = "INSERT INTO usuarios VALUES(?,?,?)";
         try (Connection conn = this.conectar();
@@ -50,6 +67,17 @@ public class MetodosUsuario {
         }
     }
     
+    /**
+     *
+     * @param usuario
+     * @param contraseña
+     * @param tipo
+     * @return
+     * 
+     * Método que busca un usuario en la tabla usuarios, buscando por todos los
+     * campos, para que devuelva solo una resultado
+     * Si lo encuentra, devuelve true. Si no, devuelve false
+     */
     public boolean buscarUsuario(String usuario, String contraseña, String tipo){
         boolean encontrado = false;
         String resultado = "";
