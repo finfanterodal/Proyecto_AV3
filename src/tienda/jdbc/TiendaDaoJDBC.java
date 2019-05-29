@@ -25,6 +25,11 @@ public class TiendaDaoJDBC {
      *
      * @param userConn
      */
+    
+    
+    public TiendaDaoJDBC() {
+    }
+
     public TiendaDaoJDBC(Connection userConn) {
         this.userConn = userConn;
     }
