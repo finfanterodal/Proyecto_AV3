@@ -8,11 +8,18 @@ import javax.swing.JOptionPane;
  * @author aparcerozas
  */
 public class MetodosUsuario {
+//
+        private Connection userConn;
+    //
     
+    public MetodosUsuario() {
+        this.userConn = userConn;
+    }
+
     /**
      *
      * @return
-     * 
+     *
      * Método de conexión a la base de datos
      */
     public Connection conectar() {
