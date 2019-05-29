@@ -5,6 +5,10 @@
  */
 package tiendaUI;
 
+import java.sql.*;
+import javax.swing.JOptionPane;
+import tienda.dto.MetodosUsuario;
+
 /**
  *
  * @author finfanterodal
@@ -14,8 +18,27 @@ public class Usuario extends javax.swing.JFrame {
     /**
      * Creates new form Usuario
      */
+    
+    MetodosUsuario m = new MetodosUsuario();
+    
     public Usuario() {
         initComponents();
+        m.conectar();
+        m.crearTablaUsuarios();
+        registrarAdmin();
+    }
+    
+    public void registrarAdmin(){
+        String sql = "INSERT INTO usuarios VALUES(?,?,?)";
+        try (Connection conn = m.conectar();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "admin");
+            pstmt.setString(2, "admin");
+            pstmt.setString(3, "admin");
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -32,10 +55,10 @@ public class Usuario extends javax.swing.JFrame {
         bClient = new javax.swing.JButton();
         bAdmin = new javax.swing.JButton();
         tUser = new javax.swing.JTextField();
-        tPasswd = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         bRegister = new javax.swing.JButton();
+        tPasswd = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,14 +103,14 @@ public class Usuario extends javax.swing.JFrame {
                         .addGap(64, 64, 64)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(bClient, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                 .addComponent(bAdmin)
                                 .addGap(17, 17, 17))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -109,8 +132,8 @@ public class Usuario extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(tPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(66, 66, 66)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,15 +158,37 @@ public class Usuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegisterActionPerformed
-        
+        String c = tPasswd.getText();
+        if(tUser.getText().isEmpty() || tPasswd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña no son válidos");
+        }
+        else{
+            m.registrarCliente(tUser.getText(), tPasswd.getText());
+        }
     }//GEN-LAST:event_bRegisterActionPerformed
 
     private void bClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientActionPerformed
-        
+        String user = tUser.getText();
+        String passwd = tPasswd.getText();
+        boolean cliente = m.buscarUsuario(user, passwd, "cliente");
+        if(cliente == true){
+            JOptionPane.showMessageDialog(null, "Encontrado");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos no son válidos.\nInténtelo de nuevo o regístrese");
+        }
     }//GEN-LAST:event_bClientActionPerformed
 
     private void bAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAdminActionPerformed
-        
+        String user = tUser.getText();
+        String passwd = tPasswd.getText();
+        boolean admin = m.buscarUsuario(user, passwd, "admin");
+        if(admin == true){
+            JOptionPane.showMessageDialog(null, "Encontrado");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos de administrador no son válidos");
+        }
     }//GEN-LAST:event_bAdminActionPerformed
 
     /**
@@ -189,7 +234,7 @@ public class Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tPasswd;
+    private javax.swing.JPasswordField tPasswd;
     private javax.swing.JTextField tUser;
     // End of variables declaration//GEN-END:variables
 }
