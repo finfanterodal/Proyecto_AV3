@@ -98,7 +98,6 @@ public class TiendaDaoJDBC {
                 conn = Conexion.getConnection();
             }
             stmt = conn.prepareStatement(sql_INSERT);
-            int index = 1;
             stmt.setString(1, producto.getNome());
             stmt.setDouble(2, producto.getPrecio());
             stmt.setInt(3, producto.getNumUnid());
@@ -123,16 +122,62 @@ public class TiendaDaoJDBC {
      * producto en la base de datos. Si el número de unidades que le asignamos
      * es 0 se eleiminará.
      */
-    public int updateProducto(Producto libro) throws SQLException {
+    public int updateProducto(Producto producto) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        sql_UPDATE = "UPDATE tienda SET precio = ? , "
+                + "numUnidades = ?";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_UPDATE);
+            //Libros   
 
+            stmt.setDouble(1, producto.getPrecio());
+            stmt.setInt(4, producto.getNumUnid());
+            rows = stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registros Actualizados: " + rows, "Succed", JOptionPane.INFORMATION_MESSAGE);
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return rows;
     }
 
     /**
      * Este método permite eliminar un producto de la base de datos.
      *
      */
-    public int deleteProducto(Producto libro) throws SQLException {
-
+    public int deleteProducto(String nombre) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        sql_DELETE = "DELETE FROM tienda WHERE nombre = ?";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_DELETE);
+            stmt.setString(1, nombre);
+            rows = stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registros Borrados: " + rows, "Succed", JOptionPane.INFORMATION_MESSAGE);
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return rows;
     }
 
     /**
