@@ -1,11 +1,16 @@
 package tienda.jdbc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import tienda.dto.Producto;
 
 /**
  *
@@ -40,14 +45,16 @@ public class TiendaDaoJDBC {
         Statement stmt = null;
 
         String sql1 = "CREATE TABLE IF NOT EXISTS tienda (\n"
-                + " isbn integer PRIMARY KEY,\n"
-                + " autor text NOT NULL,\n"
-                + " titulo text NOT NULL,\n"
-                + " idGenero integer NOT NULL REFERENCES generos (idGenero) \n"
+                + " nombre text PRIMARY KEY,\n"
+                + " precio real NOT NULL,\n"
+                + " numUnidades integer NOT NULL,\n"
+                + " tipo text NOT NULL \n"
                 + ");";
         String sql2 = "CREATE TABLE IF NOT EXISTS carro (\n"
-                + "	idGenero integer PRIMARY KEY,\n"
-                + "	genero text NOT NULL \n"
+                + " nombre text PRIMARY KEY,\n"
+                + " precio real NOT NULL,\n"
+                + " numUnidades integer NOT NULL,\n"
+                + " tipo text NOT NULL \n"
                 + ");";
 
         try {
@@ -64,12 +71,80 @@ public class TiendaDaoJDBC {
             JOptionPane.showMessageDialog(null, "Tablas creadas correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {
-            
+
         } finally {
             if (this.userConn == null) {
                 Conexion.close(conn);
             }
         }
     }
+
+    /**
+     * Este método añade un nuevo producto a la tabla existente en la base de
+     * datos. Si el nombre de este producto ya existe saltará una excepción y no
+     * se podrá introducir.
+     */
+    public int insertProducto(Producto libro) throws SQLException {
+
+    }
+
+    /**
+     * Este método permite modificar el precio y el número de unidades del
+     * producto en la base de datos. Si el número de unidades que le asignamos
+     * es 0 se eleiminará.
+     */
+    public int updateProducto(Producto libro) throws SQLException {
+
+    }
+
+    /**
+     * Este método permite eliminar un producto de la base de datos.
+     *
+     */
+    public int deleteProducto(Producto libro) throws SQLException {
+
+    }
+
+    /**
+     * Añadimos datos de un fichero a la tabla de Generos.
+     *
+     *
+     */
+    public void cargarDatosInicialesCatalogo() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Scanner sc = null;
+        String sql1 = "INSERT INTO tienda(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql1);
+            File fichero = new File("Catalogo.txt");
+            sc = new Scanner(fichero);
+            //Libros   
+            while (sc.hasNextLine()) {
+                String[] product = sc.nextLine().split(",");
+                stmt.setInt(1, Integer.parseInt(product[0]));
+                stmt.setDouble(2, Double.parseDouble(product[1]));
+                stmt.setInt(3, Integer.parseInt(product[3]));
+                stmt.setString(4, product[4]);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+
+    }
+    
 
 }
