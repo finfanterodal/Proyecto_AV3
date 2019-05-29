@@ -127,7 +127,8 @@ public class TiendaDaoJDBC {
         PreparedStatement stmt = null;
         int rows = 0;
         sql_UPDATE = "UPDATE tienda SET precio = ? , "
-                + "numUnidades = ?";
+                + "numUnidades = ? "
+                + "WHERE nombre = "+producto.getNome();
         try {
             if (this.userConn != null) {
                 conn = this.userConn;
@@ -150,6 +151,15 @@ public class TiendaDaoJDBC {
         }
         return rows;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Este método permite eliminar un producto de la base de datos.
