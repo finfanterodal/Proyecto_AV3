@@ -8,15 +8,16 @@ public class Producto {
     //Atributos
 
     private String nome;
-    private float precio;
-    private int numUnid;
+    private double precio;
+    private int numUnidades;
     private String tipo;
 
-    public Producto(String nome, float precio, String tipo, int numUnid) {
+    public Producto(String nome, double precio, int numUnidades,
+            String tipo) {
         this.nome = nome;
         this.precio = precio;
+        this.numUnidades = numUnidades;
         this.tipo = tipo;
-        this.numUnid = numUnid;
     }
 
     public Producto() {
@@ -30,7 +31,7 @@ public class Producto {
         this.nome = nome;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -47,15 +48,15 @@ public class Producto {
     }
 
     public int getNumUnid() {
-        return numUnid;
+        return numUnidades;
     }
 
-    public void setNumUnid(int numUnid) {
-        this.numUnid = numUnid;
+    public void setNumUnid(int numUnidades) {
+        this.numUnidades = numUnidades;
     }
 
     @Override
     public String toString() {
-        return "Nome:" + nome + ", Precio:" + precio + ", Tipo:" + tipo + ", Número de unidades:" + numUnid;
+        return "Nome:" + nome + ", Precio:" + precio + ", Tipo:" + tipo + ", Número de unidades:" + numUnidades;
     }
 }

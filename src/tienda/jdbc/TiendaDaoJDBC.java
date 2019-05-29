@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,8 +86,36 @@ public class TiendaDaoJDBC {
      * datos. Si el nombre de este producto ya existe saltará una excepción y no
      * se podrá introducir.
      */
-    public int insertProducto(Producto libro) throws SQLException {
+    public int insertProducto(Producto producto) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        sql_INSERT = "INSERT INTO tienda(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_INSERT);
+            int index = 1;
+            stmt.setString(1, producto.getNome());
+            stmt.setDouble(2, producto.getPrecio());
+            stmt.setInt(3, producto.getNumUnid());
+            stmt.setString(4, producto.getTipo());
+            stmt.executeUpdate();
 
+            rows = stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registros insertados: " + rows, "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return rows;
     }
 
     /**
@@ -127,7 +157,7 @@ public class TiendaDaoJDBC {
             //Libros   
             while (sc.hasNextLine()) {
                 String[] product = sc.nextLine().split(",");
-                stmt.setInt(1, Integer.parseInt(product[0]));
+                stmt.setString(1, product[0]);
                 stmt.setDouble(2, Double.parseDouble(product[1]));
                 stmt.setInt(3, Integer.parseInt(product[3]));
                 stmt.setString(4, product[4]);
@@ -145,6 +175,42 @@ public class TiendaDaoJDBC {
         }
 
     }
-    
+
+    /**
+     *
+     * 
+     *
+     * @return
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<Producto> refreshArrayProductoTienda() throws SQLException {
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        sql_SELECT = "SELECT nombre,precio,numUnidades,tipo FROM tienda";
+        //Borramos arrayList
+        productos.clear();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_SELECT);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Producto productoaux = new Producto(rs.getString("nombre"), rs.getDouble("precio"), rs.getInt("numUnidades"), rs.getString("tipo"));
+                productos.add(productoaux);
+            }
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return productos;
+    }
 
 }
