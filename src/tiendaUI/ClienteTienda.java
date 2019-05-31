@@ -294,7 +294,39 @@ public class ClienteTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_quitarBActionPerformed
 
     private void añadirUBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirUBActionPerformed
-        
+        int fila = catalogoTable.getSelectedRow();
+        int rows = 0;
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
+        } else {
+            try {
+                int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
+                Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
+                Producto product2;
+                Producto productoaux = carro.buscarProducto(product1.getNome());
+                if (productoaux != null) {
+                    excepcionAñadirUnidades(product1, numUnidades);
+                    if (numUnidades == product1.getNumUnid()) {
+                        product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
+                        tienda.deleteProducto(product2.getNome());                        
+                        rows = carro.updateProducto(product2);
+                    } else if (numUnidades != product1.getNumUnid()) {
+                        product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
+                        product1.setNumUnid(product1.getNumUnid() - numUnidades);
+                        tienda.updateProducto(product1);
+                        rows = carro.updateProducto(product2);
+                    }
+                } else {
+                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
+                }
+                
+            } catch (Excepcion_Definida e) {
+                IO.devolver(IO.VENTANA, e.getMessage());
+            }
+            IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
+            cargarTablaCatalogo();
+            cargarTablaCarro();
+        }
     }//GEN-LAST:event_añadirUBActionPerformed
 
     /**
