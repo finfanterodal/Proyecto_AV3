@@ -1,5 +1,7 @@
 package proyecto_prog_av3;
 
+import tiendaUI.Usuario;
+
 /**
  *
  * @author finfanterodal
@@ -11,6 +13,8 @@ public class App {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Usuario user = new Usuario();
+        user.setVisible(true);
     }
     
 }

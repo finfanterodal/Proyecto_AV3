@@ -9,14 +9,14 @@ import tienda.dto.Producto;
  * @author finfanterodal
  */
 public class CarroDaoJDBC {
-    
+
     public CarroDaoJDBC(Connection userConn) {
         this.userConn = userConn;
     }
 
     private Connection userConn;
     TiendaDaoJDBC tienda = new TiendaDaoJDBC();
-    
+
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
@@ -32,7 +32,7 @@ public class CarroDaoJDBC {
         PreparedStatement stmt = null;
         int rows = 0;
         sql_INSERT = "INSERT INTO carro(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
-        sql_UPDATE = "UPDATE tienda SET numUnidades = ? WHERE nombre = "+ producto.getNome();
+        sql_UPDATE = "UPDATE tienda SET numUnidades = ? WHERE nombre = " + producto.getNome();
         try {
             if (this.userConn != null) {
                 conn = this.userConn;
@@ -64,16 +64,18 @@ public class CarroDaoJDBC {
      * Este méto actualiza un producto de nuestra tabla. Si el producto ya está
      * en la base de datos solo añade unidades de este producto.
      */
+    /*
     public int updateProducto(Producto libro) throws SQLException {
 
     }
-
+     */
     /**
      * Elimina este producto de la base de datos, de la tabla en cuestión.
      * Elimina el producto del carro y devuelve las unidades a la tienda.
      */
+    /*
     public int deleteProducto(Producto libro) throws SQLException {
 
     }
-
+     */
 }

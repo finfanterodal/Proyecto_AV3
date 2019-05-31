@@ -1,8 +1,9 @@
 package tiendaUI;
 
+import java.io.File;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import tienda.dto.MetodosUsuario;
+import tienda.jdbc.MetodosUsuario;
 
 /**
  *
@@ -13,33 +14,18 @@ public class Usuario extends javax.swing.JFrame {
     /**
      * Creates new form Usuario
      */
-    
     MetodosUsuario m = new MetodosUsuario();
-    
+
     /**
-     *En el constructor, me conecto a la base de datos, creao la tabla usuarios
+     * En el constructor, me conecto a la base de datos, creao la tabla usuarios
      * y le inserto el administrador
      */
     public Usuario() {
         initComponents();
-        m.conectar();
-        m.crearTablaUsuarios();
-        registrarAdmin();
-    }
-    
-    /**
-     *Método para insertar los datos del administrador a la tabla usuarios
-     */
-    public void registrarAdmin(){
-        String sql = "INSERT INTO usuarios VALUES(?,?,?)";
-        try (Connection conn = m.conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, "admin");
-            pstmt.setString(2, "admin");
-            pstmt.setString(3, "admin");
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        File fichero = new File("tienda.db");
+        if (!fichero.exists()) {
+            m.crearTablaUsuarios();
+            m.registrarAdmin();
         }
     }
 
@@ -163,10 +149,9 @@ public class Usuario extends javax.swing.JFrame {
     //de las cajas de texto. Si alguna de las cajas está vacía, no se ejecuta
     private void bRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegisterActionPerformed
         String c = tPasswd.getText();
-        if(tUser.getText().isEmpty() || tPasswd.getText().isEmpty()){
+        if (tUser.getText().isEmpty() || tPasswd.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre de usuario o contraseña no son válidos");
-        }
-        else{
+        } else {
             m.registrarCliente(tUser.getText(), tPasswd.getText());
         }
     }//GEN-LAST:event_bRegisterActionPerformed
@@ -178,10 +163,12 @@ public class Usuario extends javax.swing.JFrame {
         String user = tUser.getText();
         String passwd = tPasswd.getText();
         boolean cliente = m.buscarUsuario(user, passwd, "cliente");
-        if(cliente == true){
+        if (cliente == true) {
             JOptionPane.showMessageDialog(null, "Encontrado");
-        }
-        else{
+            ClienteTienda cliente1 = new ClienteTienda();
+            cliente1.setVisible(true);
+            this.setVisible(false);
+        } else {
             JOptionPane.showMessageDialog(null, "Los datos no son válidos.\nInténtelo de nuevo o regístrese");
         }
     }//GEN-LAST:event_bClientActionPerformed
@@ -193,10 +180,12 @@ public class Usuario extends javax.swing.JFrame {
         String user = tUser.getText();
         String passwd = tPasswd.getText();
         boolean admin = m.buscarUsuario(user, passwd, "admin");
-        if(admin == true){
+        if (admin == true) {
             JOptionPane.showMessageDialog(null, "Encontrado");
-        }
-        else{
+            AdministracionTienda admin1 = new AdministracionTienda();
+            admin1.setVisible(true);
+            this.setVisible(false);
+        } else {
             JOptionPane.showMessageDialog(null, "Los datos de administrador no son válidos");
         }
     }//GEN-LAST:event_bAdminActionPerformed
