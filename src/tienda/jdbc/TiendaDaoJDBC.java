@@ -106,7 +106,7 @@ public class TiendaDaoJDBC {
             stmt.setInt(3, producto.getNumUnid());
             stmt.setString(4, producto.getTipo());
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Insertado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -145,7 +145,7 @@ public class TiendaDaoJDBC {
             stmt.setInt(2, producto.getNumUnid());
             stmt.setString(3, producto.getNome());
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Modificado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -175,7 +175,7 @@ public class TiendaDaoJDBC {
             stmt = conn.prepareStatement(sql_DELETE);
             stmt.setString(1, nombre);
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Ejecutado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Eliminado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -290,6 +290,38 @@ public class TiendaDaoJDBC {
                 break;
         }
         return opcion;
+    }
+
+    public Producto buscarProducto(String nombre) {
+        int numUnidades = 0;
+        sql_SELECT = "SELECT nombre,precio,numUnidades,tipo FROM tienda WHERE nombre = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Producto productoaux=null; 
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_SELECT);
+            stmt.setString(1, nombre);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                productoaux = new Producto(rs.getString("nombre"), rs.getDouble("precio"), rs.getInt("numUnidades"), rs.getString("tipo"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+
+        return productoaux;
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import tienda.jdbc.MetodosUsuario;
+import tienda.jdbc.TiendaDaoJDBC;
 
 /**
  *
@@ -22,11 +23,16 @@ public class Usuario extends javax.swing.JFrame {
      */
     public Usuario() {
         initComponents();
+        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
         File fichero = new File("tienda.db");
         if (!fichero.exists()) {
             m.crearTablaUsuarios();
             m.registrarAdmin();
+            tienda.crearTablas();
+            //tienda.cargarDatosInicialesCatalogo();
+            tienda.refreshArrayProductoTienda();
         }
+
     }
 
     /**

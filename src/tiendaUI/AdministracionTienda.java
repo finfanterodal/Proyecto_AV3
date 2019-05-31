@@ -22,13 +22,6 @@ public class AdministracionTienda extends javax.swing.JFrame {
      */
     public AdministracionTienda() {
         initComponents();
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
-        File fichero = new File("libreria.db");
-        if (!fichero.exists()) {
-            tienda.crearTablas();
-            //tienda.cargarDatosInicialesCatalogo();
-            tienda.refreshArrayProductoTienda();
-        }
         cargarTablaCatalogo();
     }
 
@@ -225,7 +218,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_modificarBActionPerformed
-
+  
     /**
      * Recojo los datos del ArrayList actualizado y los añado a la tabla de la
      * interfaz.
