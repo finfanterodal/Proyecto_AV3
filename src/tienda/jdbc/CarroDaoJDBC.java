@@ -16,7 +16,6 @@ public class CarroDaoJDBC {
     public CarroDaoJDBC() {
     }
 
-    
     public CarroDaoJDBC(Connection userConn) {
         this.userConn = userConn;
     }
@@ -67,11 +66,37 @@ public class CarroDaoJDBC {
      * Este méto actualiza un producto de nuestra tabla. Si el producto ya está
      * en la base de datos solo añade unidades de este producto.
      */
-    /*
-    public int updateProducto(Producto libro) throws SQLException {
-
+    public int updateProducto(Producto producto) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        sql_UPDATE = "UPDATE carro SET precio = ? , "
+                + "numUnidades = ? "
+                + "WHERE nombre = ?";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_UPDATE);
+            //Libros   
+            stmt.setDouble(1, producto.getPrecio());
+            stmt.setInt(2, producto.getNumUnid());
+            stmt.setString(3, producto.getNome());
+            rows = stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Modificado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return rows;
     }
-     */
+
     /**
      * Elimina este producto de la base de datos, de la tabla en cuestión.
      * Elimina el producto del carro y devuelve las unidades a la tienda.

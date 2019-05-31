@@ -44,6 +44,7 @@ public class ClienteTienda extends javax.swing.JFrame {
         eliminarB = new javax.swing.JButton();
         confirmarB = new javax.swing.JButton();
         refresh = new javax.swing.JButton();
+        quitarB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,26 +111,34 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
         });
 
+        quitarB.setText("Quitar Unidades");
+        quitarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(añadirB)
-                        .addGap(18, 18, 18)
+                        .addGap(45, 45, 45)
                         .addComponent(eliminarB)
-                        .addGap(63, 63, 63)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(quitarB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(refresh)
                         .addGap(18, 18, 18)
                         .addComponent(confirmarB))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
@@ -153,7 +162,8 @@ public class ClienteTienda extends javax.swing.JFrame {
                     .addComponent(añadirB)
                     .addComponent(eliminarB)
                     .addComponent(confirmarB)
-                    .addComponent(refresh))
+                    .addComponent(refresh)
+                    .addComponent(quitarB))
                 .addContainerGap())
         );
 
@@ -172,7 +182,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                 int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
                 Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
                 Producto product2 = new Producto(catalogoTable.getValueAt(fila, 0).toString(), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()) - numUnidades, catalogoTable.getValueAt(fila, 3).toString());
-                excepcionUnidades(product1, numUnidades);
+                excepcionAñadirUnidades(product1, numUnidades);
                 if (numUnidades == product1.getNumUnid()) {
                     tienda.deleteProducto(product1.getNome());
                     carro.insertProducto(product1, numUnidades);
@@ -209,7 +219,7 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
             int rows = carro.deleteProducto(product1.getNome());
             IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
-            
+
             cargarTablaCatalogo();
             cargarTablaCarro();
         }
@@ -217,7 +227,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarBActionPerformed
 
     private void confirmarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBActionPerformed
-        
+
 
     }//GEN-LAST:event_confirmarBActionPerformed
 
@@ -225,6 +235,45 @@ public class ClienteTienda extends javax.swing.JFrame {
         cargarTablaCatalogo();
         cargarTablaCarro();
     }//GEN-LAST:event_refreshActionPerformed
+
+    private void quitarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarBActionPerformed
+        CarroDaoJDBC carro = new CarroDaoJDBC();
+        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+        int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas quitar:");
+        try {
+            int fila = carroTable.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
+            } else {
+                Producto product1 = new Producto(String.valueOf(carroTable.getValueAt(fila, 0)), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()), String.valueOf(carroTable.getValueAt(fila, 3)));
+                Producto productoaux = tienda.buscarProducto(product1.getNome());
+                Producto product2;
+                int rows = 0;
+                excepcionAñadirUnidades(product1, numUnidades);
+                if (productoaux != null) {
+                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), productoaux.getNumUnid() + numUnidades, carroTable.getValueAt(fila, 3).toString());
+                    tienda.updateProducto(product2);
+                } else {
+                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), product1.getNumUnid(), carroTable.getValueAt(fila, 3).toString());
+                    tienda.insertProducto(product2);
+                }
+                if (product1.getNumUnid() != numUnidades) {
+                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), product1.getNumUnid() - numUnidades, carroTable.getValueAt(fila, 3).toString());
+                    rows = carro.updateProducto(product2);
+                } else {
+                    rows = carro.deleteProducto(product1.getNome());
+                }
+
+                IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
+            }
+        } catch (Excepcion_Definida e) {
+            IO.devolver(IO.VENTANA, e.getMessage());
+        }
+        cargarTablaCatalogo();
+        cargarTablaCarro();
+
+
+    }//GEN-LAST:event_quitarBActionPerformed
 
     /**
      * Recojo los datos del ArrayList actualizado y los añado a la tabla de la
@@ -263,21 +312,22 @@ public class ClienteTienda extends javax.swing.JFrame {
     }
 
     //Trata que el número de unidades no pueda ser negativo y que elnúmero de unidades que queramos añadir al carro no pueda ser mayor de las unidades que hay en el catalogo.
-    public void excepcionUnidades(Producto product, int numUnid) throws Excepcion_Definida {
+    public void excepcionAñadirUnidades(Producto product, int numUnid) throws Excepcion_Definida {
         if (product.getNumUnid() < numUnid & numUnid > 0) {
             throw new Excepcion_Definida("Esa cantidad es mayor de la que hay en la tienda.");
-        }else if(numUnid < 0){
+        } else if (numUnid < 0) {
             throw new Excepcion_Definida("Esa cantidad no puede ser negativa.");
         }
     }
 
     //Trata que el número de unidades que queremos quitar no sea mayor del que hay y que este no sea un número negativo.
-    public void excepcionQuitarNumUnidades(Producto product, int numUnid) throws Excepcion_Definida {
+    public void excepcionQuitarUnidades(Producto product, int numUnid) throws Excepcion_Definida {
         if (product.getNumUnid() < numUnid) {
             throw new Excepcion_Definida("Esa cantidad es mayor de la que hay en el carro.");
+        } else if (numUnid < 0) {
+            throw new Excepcion_Definida("Esa cantidad no puede ser negativa.");
         }
     }
-
 
     /**
      * @param args the command line arguments
@@ -328,6 +378,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton quitarB;
     private javax.swing.JButton refresh;
     // End of variables declaration//GEN-END:variables
 }
