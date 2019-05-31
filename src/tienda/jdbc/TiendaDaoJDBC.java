@@ -73,8 +73,6 @@ public class TiendaDaoJDBC {
             // create new tables
             stmt.execute(sql1);
             stmt.execute(sql2);
-            JOptionPane.showMessageDialog(null, "Tablas creadas correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
-
         } catch (SQLException ex) {
 
         } finally {
@@ -106,9 +104,8 @@ public class TiendaDaoJDBC {
             stmt.setInt(3, producto.getNumUnid());
             stmt.setString(4, producto.getTipo());
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Insertado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al insertar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -145,9 +142,8 @@ public class TiendaDaoJDBC {
             stmt.setInt(2, producto.getNumUnid());
             stmt.setString(3, producto.getNome());
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Modificado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar los modificar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -175,9 +171,8 @@ public class TiendaDaoJDBC {
             stmt = conn.prepareStatement(sql_DELETE);
             stmt.setString(1, nombre);
             rows = stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Eliminado correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+               JOptionPane.showMessageDialog(null, "Error al borrar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -215,11 +210,10 @@ public class TiendaDaoJDBC {
                 stmt.setString(4, product[3].toString());
                 stmt.executeUpdate();
             }
-            JOptionPane.showMessageDialog(null, "Datos cargados correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se ha encontrado el fichero.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -256,7 +250,7 @@ public class TiendaDaoJDBC {
                 productos.add(productoaux);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
@@ -298,7 +292,7 @@ public class TiendaDaoJDBC {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Producto productoaux=null; 
+        Producto productoaux = null;
         try {
             if (this.userConn != null) {
                 conn = this.userConn;
@@ -312,7 +306,7 @@ public class TiendaDaoJDBC {
                 productoaux = new Producto(rs.getString("nombre"), rs.getDouble("precio"), rs.getInt("numUnidades"), rs.getString("tipo"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TiendaDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);

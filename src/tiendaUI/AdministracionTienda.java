@@ -17,6 +17,9 @@ import utilities.IO;
  */
 public class AdministracionTienda extends javax.swing.JFrame {
 
+    //
+    TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
     /**
      * Creates new form AdministracionTienda
      */
@@ -176,7 +179,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void añadirBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBActionPerformed
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         try {
             String tipo = tienda.selectTipo(tipoCombo.getSelectedIndex());
             int rows = tienda.insertProducto(new Producto(valorNom.getText(), Double.parseDouble(valorPrecio.getText()), Integer.parseInt(valorUnidades.getText()), tipo));
@@ -190,7 +193,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_añadirBActionPerformed
 
     private void eliminarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBActionPerformed
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         int fila = catalogoTable.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
@@ -203,7 +206,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarBActionPerformed
 
     private void modificarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBActionPerformed
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         int fila = catalogoTable.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
@@ -226,7 +229,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
     public void cargarTablaCatalogo() {
 
         //Cargamos la tabla de la interfaz con los datos de la base que están almacenados en un Array
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         DefaultTableModel model = (DefaultTableModel) catalogoTable.getModel();
         ArrayList<Producto> product = tienda.refreshArrayProductoTienda();
         model.setRowCount(0);

@@ -16,6 +16,10 @@ import utilities.IO;
  */
 public class ClienteTienda extends javax.swing.JFrame {
 
+    //
+    CarroDaoJDBC carro = new CarroDaoJDBC();
+    TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
     /**
      * Creates new form Menu
      */
@@ -45,19 +49,20 @@ public class ClienteTienda extends javax.swing.JFrame {
         confirmarB = new javax.swing.JButton();
         refresh = new javax.swing.JButton();
         quitarB = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        añadirUB = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 74, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 276, Short.MAX_VALUE)
         );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         añadirB.setText("Añadir");
         añadirB.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +123,13 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
         });
 
+        añadirUB.setText("Añadir Unidades");
+        añadirUB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                añadirUBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,45 +137,48 @@ public class ClienteTienda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(añadirB)
-                        .addGap(45, 45, 45)
-                        .addComponent(eliminarB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(quitarB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                        .addComponent(refresh)
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(añadirB)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eliminarB)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(añadirUB)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(quitarB)
+                                .addGap(31, 31, 31)
+                                .addComponent(refresh)
+                                .addGap(31, 31, 31))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(7, 7, 7)))
                         .addComponent(confirmarB))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(22, 22, 22))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(11, 11, 11)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(añadirB)
                     .addComponent(eliminarB)
                     .addComponent(confirmarB)
                     .addComponent(refresh)
-                    .addComponent(quitarB))
+                    .addComponent(quitarB)
+                    .addComponent(añadirUB))
                 .addContainerGap())
         );
 
@@ -171,29 +186,35 @@ public class ClienteTienda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void añadirBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBActionPerformed
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
-        CarroDaoJDBC carro = new CarroDaoJDBC();
-        int fila = catalogoTable.getSelectedRow();
 
+        int fila = catalogoTable.getSelectedRow();
+        int rows = 0;
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
         } else {
             try {
                 int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
                 Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
-                Producto product2 = new Producto(catalogoTable.getValueAt(fila, 0).toString(), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()) - numUnidades, catalogoTable.getValueAt(fila, 3).toString());
-                excepcionAñadirUnidades(product1, numUnidades);
-                if (numUnidades == product1.getNumUnid()) {
-                    tienda.deleteProducto(product1.getNome());
-                    carro.insertProducto(product1, numUnidades);
-                } else if (numUnidades != product1.getNumUnid()) {
-                    IO.devolver(IO.VENTANA, product1.toString());
-                    tienda.updateProducto(product2);
-                    carro.insertProducto(product1, numUnidades);
+                Producto product2;
+                Producto productoaux = carro.buscarProducto(product1.getNome());
+                if (productoaux == null) {
+                    excepcionAñadirUnidades(product1, numUnidades);
+                    if (numUnidades == product1.getNumUnid()) {
+                        tienda.deleteProducto(product1.getNome());
+                        rows = carro.insertProducto(product1, numUnidades);
+                    } else if (numUnidades != product1.getNumUnid()) {
+                        product2 = new Producto(catalogoTable.getValueAt(fila, 0).toString(), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()) - numUnidades, catalogoTable.getValueAt(fila, 3).toString());
+                        tienda.updateProducto(product2);
+                        rows = carro.insertProducto(product1, numUnidades);
+                    }
+                } else {
+                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
                 }
+
             } catch (Excepcion_Definida e) {
                 IO.devolver(IO.VENTANA, e.getMessage());
             }
+            IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
             cargarTablaCatalogo();
             cargarTablaCarro();
         }
@@ -201,8 +222,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_añadirBActionPerformed
 
     private void eliminarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBActionPerformed
-        CarroDaoJDBC carro = new CarroDaoJDBC();
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         int fila = carroTable.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
@@ -219,7 +239,6 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
             int rows = carro.deleteProducto(product1.getNome());
             IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
-
             cargarTablaCatalogo();
             cargarTablaCarro();
         }
@@ -237,8 +256,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshActionPerformed
 
     private void quitarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarBActionPerformed
-        CarroDaoJDBC carro = new CarroDaoJDBC();
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
+
         int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas quitar:");
         try {
             int fila = carroTable.getSelectedRow();
@@ -275,6 +293,10 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_quitarBActionPerformed
 
+    private void añadirUBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirUBActionPerformed
+        
+    }//GEN-LAST:event_añadirUBActionPerformed
+
     /**
      * Recojo los datos del ArrayList actualizado y los añado a la tabla de la
      * interfaz.
@@ -282,7 +304,6 @@ public class ClienteTienda extends javax.swing.JFrame {
     public void cargarTablaCatalogo() {
 
         //Cargamos la tabla de la interfaz con los datos de la base que están almacenados en un Array
-        TiendaDaoJDBC tienda = new TiendaDaoJDBC();
         DefaultTableModel model = (DefaultTableModel) catalogoTable.getModel();
         ArrayList<Producto> product = tienda.refreshArrayProductoTienda();
         model.setRowCount(0);
@@ -300,7 +321,6 @@ public class ClienteTienda extends javax.swing.JFrame {
     public void cargarTablaCarro() {
 
         //Cargamos la tabla de la interfaz con los datos de la base que están almacenados en un Array
-        CarroDaoJDBC carro = new CarroDaoJDBC();
         DefaultTableModel mode2 = (DefaultTableModel) carroTable.getModel();
         ArrayList<Producto> product = carro.refreshArrayProductoCarro();
         mode2.setRowCount(0);
@@ -369,6 +389,7 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton añadirB;
+    private javax.swing.JButton añadirUB;
     private javax.swing.JTable carroTable;
     private javax.swing.JTable catalogoTable;
     private javax.swing.JButton confirmarB;
