@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import utilities.IO;
 
 /**
  *
@@ -17,13 +18,12 @@ public class MetodosUsuario {
 
     public MetodosUsuario() {
     }
-    
+
     private Connection userConn;
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
     private String sql_SELECT;
-
 
     /**
      * Método que crea la tabla usuarios dónde se guardarán los datos de los
@@ -69,7 +69,7 @@ public class MetodosUsuario {
      * @param contraseña
      *
      */
-    public int registrarCliente(String usuario, String contraseña){
+    public int registrarCliente(String usuario, String contraseña) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -87,7 +87,7 @@ public class MetodosUsuario {
             rows = stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
         } catch (SQLException ex) {
-            Logger.getLogger(MetodosUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            IO.devolver(IO.VENTANA, "Usuario ya existente.");
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {

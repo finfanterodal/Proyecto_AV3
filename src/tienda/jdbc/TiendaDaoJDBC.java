@@ -208,14 +208,14 @@ public class TiendaDaoJDBC {
             sc = new Scanner(fichero);
             //Libros   
             while (sc.hasNextLine()) {
-                String[] product = sc.nextLine().split(",");
-                stmt.setString(1, product[0]);
-                stmt.setDouble(2, Double.parseDouble(product[1]));
-                stmt.setInt(3, Integer.parseInt(product[2]));
-                stmt.setString(4, product[3]);
+                Object[] product = sc.nextLine().split(",");
+                stmt.setString(1, product[0].toString());
+                stmt.setDouble(2, Double.parseDouble(product[1].toString()));
+                stmt.setInt(3, Integer.parseInt(product[2].toString()));
+                stmt.setString(4, product[3].toString());
                 stmt.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Datos cargados correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
             }
+            JOptionPane.showMessageDialog(null, "Datos cargados correctamente.", "Succed", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {

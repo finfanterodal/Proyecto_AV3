@@ -1,13 +1,2 @@
 dvd,10,2000,informatica
 
-televisor,1500,100,electronica
-
-pantalla,200,100,informatica
-
-raton,30,informatica,50
-
-alfombrilla,40,20,informatica
-
-cazadora,50,25,ropa
-
-camiseta,30,45,ropa
