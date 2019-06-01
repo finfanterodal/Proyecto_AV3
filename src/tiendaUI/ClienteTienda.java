@@ -209,7 +209,6 @@ public class ClienteTienda extends javax.swing.JFrame {
             try {
                 int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
                 Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
-                Producto product2;
                 Producto productoaux = carro.buscarProducto(product1.getNome());
                 if (productoaux == null) {
                     excepcionAñadirUnidades(product1, numUnidades);
@@ -217,12 +216,13 @@ public class ClienteTienda extends javax.swing.JFrame {
                         tienda.deleteProducto(product1.getNome());
                         rows = carro.insertProducto(product1, numUnidades);
                     } else if (numUnidades != product1.getNumUnid()) {
-                        product2 = new Producto(catalogoTable.getValueAt(fila, 0).toString(), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()) - numUnidades, catalogoTable.getValueAt(fila, 3).toString());
-                        tienda.updateProducto(product2);
+                        productoaux = product1;
+                        productoaux.setNumUnid(productoaux.getNumUnid() - numUnidades);
+                        tienda.updateProducto(productoaux);
                         rows = carro.insertProducto(product1, numUnidades);
                     }
                 } else {
-                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
+                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de añadir unidades.");
                 }
 
             } catch (Excepcion_Definida e) {
@@ -239,9 +239,13 @@ public class ClienteTienda extends javax.swing.JFrame {
     
     
        /**
-     * Este método elimina un producto seleccionado del carro cumpliendo las siguientes condiciones:
-     * 1. Si del producto al que se desean eliminar todabía quedan unidades en la tienda(catálogo), modifica este sumándole las unidades del producto eliminado del caroo.
-     * 2. Si el producto resulta que ya no queda en la tienda, inserta directamente el producto al que le queremos eliminar del carro en la tienda.
+     * Este método elimina un producto seleccionado del carro cumpliendo las
+     * siguientes condiciones: 1. Si del producto al que se desean eliminar
+     * todabía quedan unidades en la tienda(catálogo), modifica este sumándole
+     * las unidades del producto eliminado del caroo.
+     * 2. Si el producto resulta
+     * que ya no queda en la tienda, inserta directamente el producto que le
+     * queremos eliminar del carro en la tienda.
      */
     private void eliminarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBActionPerformed
 
@@ -251,13 +255,12 @@ public class ClienteTienda extends javax.swing.JFrame {
         } else {
             Producto product1 = new Producto(String.valueOf(carroTable.getValueAt(fila, 0)), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()), String.valueOf(carroTable.getValueAt(fila, 3)));
             Producto productoaux = tienda.buscarProducto(product1.getNome());
-            Producto product2;
             if (productoaux != null) {
-                product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), productoaux.getNumUnid() + product1.getNumUnid(), carroTable.getValueAt(fila, 3).toString());
-                tienda.updateProducto(product2);
+                productoaux.setNumUnid(productoaux.getNumUnid() + product1.getNumUnid());
+                tienda.updateProducto(productoaux);
             } else {
-                product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), product1.getNumUnid(), carroTable.getValueAt(fila, 3).toString());
-                tienda.insertProducto(product2);
+                productoaux = product1;
+                tienda.insertProducto(productoaux);
             }
             int rows = carro.deleteProducto(product1.getNome());
             IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
