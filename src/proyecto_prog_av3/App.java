@@ -12,9 +12,9 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Instancia del objeto de tipo Usuario
         Usuario user = new Usuario();
         user.setVisible(true);
     }
-    
+
 }

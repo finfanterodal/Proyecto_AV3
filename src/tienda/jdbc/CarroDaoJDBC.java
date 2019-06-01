@@ -2,8 +2,6 @@ package tienda.jdbc;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tienda.dto.Producto;
 
@@ -13,16 +11,25 @@ import tienda.dto.Producto;
  */
 public class CarroDaoJDBC {
 
+    /**
+     * Constructor vacío.
+     */
     public CarroDaoJDBC() {
     }
 
+    /**
+     * Constructor que recibe un objeto de tipo Conection.
+     *
+     * @param userConn
+     */
     public CarroDaoJDBC(Connection userConn) {
         this.userConn = userConn;
     }
 
+    /*
+    *Atributos
+     */
     private Connection userConn;
-    TiendaDaoJDBC tienda = new TiendaDaoJDBC();
-
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
@@ -30,8 +37,11 @@ public class CarroDaoJDBC {
 
     /**
      * Este método añade un nuevo producto a la tabla existente en la base de
-     * datos y quita unidades de la tienda. Si el nombre de este producto ya
-     * existe saltará una excepción y no se podrá introducir.
+     * datos.
+     *
+     * @param producto
+     * @param unidadesCatalogo
+     * @return rows
      */
     public int insertProducto(Producto producto, int unidadesCatalogo) {
         Connection conn = null;
@@ -51,7 +61,7 @@ public class CarroDaoJDBC {
             stmt.setString(4, producto.getTipo());
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "Error al insertar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al insertar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -62,8 +72,10 @@ public class CarroDaoJDBC {
     }
 
     /**
-     * Este méto actualiza un producto de nuestra tabla. Si el producto ya está
-     * en la base de datos solo añade unidades de este producto.
+     * Este méto actualiza un producto de nuestra tabla.
+     *
+     * @param producto
+     * @return rows
      */
     public int updateProducto(Producto producto) {
         Connection conn = null;
@@ -85,7 +97,7 @@ public class CarroDaoJDBC {
             stmt.setString(3, producto.getNome());
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null, "Error al modificar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al modificar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -97,7 +109,9 @@ public class CarroDaoJDBC {
 
     /**
      * Elimina este producto de la base de datos, de la tabla en cuestión.
-     * Elimina el producto del carro y devuelve las unidades a la tienda.
+     *
+     * @param nombre
+     * @return rows
      */
     public int deleteProducto(String nombre) {
         Connection conn = null;
@@ -125,10 +139,10 @@ public class CarroDaoJDBC {
     }
 
     /**
+     * Este método carga los datos existentes en la base dae datos de la tabla
+     * en cuestión en un ArrayList y lo devuelve.
      *
-     *
-     *
-     * @return @throws java.sql.SQLException
+     * @return productos
      */
     public ArrayList<Producto> refreshArrayProductoCarro() {
         ArrayList<Producto> productos = new ArrayList<Producto>();
@@ -151,7 +165,7 @@ public class CarroDaoJDBC {
                 productos.add(productoaux);
             }
         } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "Error al buscar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al buscar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
@@ -161,10 +175,15 @@ public class CarroDaoJDBC {
         }
         return productos;
     }
-    
-    
-    
-     public Producto buscarProducto(String nombre) {
+
+    /**
+     * Este método busca un producto en la base de datos dado el nombre, y
+     * devuelve ese producto.
+     *
+     * @param nombre
+     * @return productoaux
+     */
+    public Producto buscarProducto(String nombre) {
         int numUnidades = 0;
         sql_SELECT = "SELECT nombre,precio,numUnidades,tipo FROM carro WHERE nombre = ?";
         Connection conn = null;

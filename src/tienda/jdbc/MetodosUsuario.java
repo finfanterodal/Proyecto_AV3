@@ -1,6 +1,7 @@
 package tienda.jdbc;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -12,13 +13,24 @@ import utilities.IO;
  */
 public class MetodosUsuario {
 
+    /**
+     * Constructor con parámetros.
+     *
+     * @param userConn
+     */
     public MetodosUsuario(Connection userConn) {
         this.userConn = userConn;
     }
 
+    /**
+     * Constructor sin parámetros.
+     */
     public MetodosUsuario() {
     }
-
+    
+    /**
+     * Atributos.
+     */
     private Connection userConn;
     private String sql_INSERT;
     private String sql_UPDATE;
@@ -67,6 +79,7 @@ public class MetodosUsuario {
      *
      * @param usuario
      * @param contraseña
+     * @return
      *
      */
     public int registrarCliente(String usuario, String contraseña) {
@@ -99,6 +112,8 @@ public class MetodosUsuario {
 
     /**
      * Método para insertar los datos del administrador a la tabla usuarios
+     *
+     * @return rows
      */
     public int registrarAdmin() {
         Connection conn = null;
@@ -128,15 +143,15 @@ public class MetodosUsuario {
     }
 
     /**
+     * Método que busca un usuario en la tabla usuarios, buscando por todos los
+     * campos, para que devuelva solo una resultado Si lo encuentra, devuelve
+     * true. Si no, devuelve false.
      *
      * @param usuario
      * @param contraseña
      * @param tipo
-     * @return
+     * @return encontrado
      *
-     * Método que busca un usuario en la tabla usuarios, buscando por todos los
-     * campos, para que devuelva solo una resultado Si lo encuentra, devuelve
-     * true. Si no, devuelve false
      */
     public boolean buscarUsuario(String usuario, String contraseña, String tipo) {
         boolean encontrado = false;
@@ -171,4 +186,38 @@ public class MetodosUsuario {
         }
     }
 
+    /**
+     * Método que busca todos los usuarios y devuelcve un ArrayList.
+     *
+     * @return usuarios
+     */
+    public ArrayList<String> buscarUsuarios() {
+
+        int rows;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String resultado = "";
+        ArrayList<String> usuarios = new ArrayList<>();
+        String sql = "SELECT usuario FROM usuarios";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                usuarios.add(rs.getString("usuario"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+            return usuarios;
+        }
+    }
 }

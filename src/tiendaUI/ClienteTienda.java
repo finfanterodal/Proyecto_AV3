@@ -26,6 +26,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     public ClienteTienda() {
         initComponents();
         cargarTablaCatalogo();
+        cargarTablaCarro();
     }
 
     /**
@@ -185,6 +186,19 @@ public class ClienteTienda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Este método añada una cantidad de producto dad por el usuario al carro
+     * dadas las siguientes condiciones: 
+     * 1. Si el producto ya existiese en el
+     * carro no se podrían añadir unidades desde aquí. 
+     * 2. Si el producto no
+     * existe y aparte son todas las unidades del producto que hay en el
+     * catálogo, se inserta este en el carro y se borra del catálogo. 
+     * 3.Si las
+     * unidades que se quieren añadir son menores de las que hay en el catálogo,
+     * se inserta el producto en el carro y se modifica el producto en el
+     * catálogo restándole dichas unidades.
+     */
     private void añadirBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBActionPerformed
 
         int fila = catalogoTable.getSelectedRow();
@@ -213,6 +227,8 @@ public class ClienteTienda extends javax.swing.JFrame {
 
             } catch (Excepcion_Definida e) {
                 IO.devolver(IO.VENTANA, e.getMessage());
+            } catch (NumberFormatException e) {
+                IO.devolver(IO.VENTANA, "No has introducido ningún valor");
             }
             IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
             cargarTablaCatalogo();
@@ -220,7 +236,13 @@ public class ClienteTienda extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_añadirBActionPerformed
-
+    
+    
+       /**
+     * Este método elimina un producto seleccionado del carro cumpliendo las siguientes condiciones:
+     * 1. Si del producto al que se desean eliminar todabía quedan unidades en la tienda(catálogo), modifica este sumándole las unidades del producto eliminado del caroo.
+     * 2. Si el producto resulta que ya no queda en la tienda, inserta directamente el producto al que le queremos eliminar del carro en la tienda.
+     */
     private void eliminarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBActionPerformed
 
         int fila = carroTable.getSelectedRow();
@@ -250,15 +272,24 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_confirmarBActionPerformed
 
+    /**
+     * Carga los datos desde la base de datos a las dos tablas.
+     */
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
         cargarTablaCatalogo();
         cargarTablaCarro();
     }//GEN-LAST:event_refreshActionPerformed
 
+    /**
+     * Este método quita unidades del producto seleccionado del carro cumpliendo las siguientes condiciones:
+     * 1. Si del producto al que se desean quitar unidades todabía quedan unidades en la tienda(catálogo), modifica este sumándole las unidades del producto del caroo.
+     * 2. Si el producto resulta que ya no queda en la tienda, inserta directamente el producto al que le queremos quitae unidades del carro en la tienda, con el número de unidades especificado.
+     * 3. Cuando el número de unidades a quitar es igual al que hay del producto en el carro lo elimina, y si es menor simplemente lo actualiza.
+     */
     private void quitarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarBActionPerformed
 
-        int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas quitar:");
         try {
+            int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas quitar:");
             int fila = carroTable.getSelectedRow();
             if (fila == -1) {
                 JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
@@ -286,6 +317,8 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
         } catch (Excepcion_Definida e) {
             IO.devolver(IO.VENTANA, e.getMessage());
+        } catch (NumberFormatException e) {
+            IO.devolver(IO.VENTANA, "No has introducido ningún valor");
         }
         cargarTablaCatalogo();
         cargarTablaCarro();
@@ -293,6 +326,19 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_quitarBActionPerformed
 
+    /**
+     * Este método añade unidades del producto seleccionado de la
+     * tienda(catalogo) al carro cumpliendo las siguientes condiciones:
+     * 1. Si del producto del que se quieren añadir unidades no existe en el carro,
+     * deberemos utilizar otr botón. 
+     * 2. Si el producto existe y el número de
+     * unidades es menor del que hay en la tienda(catálogo) nos actualiza el
+     * producto del carro y también el de la tienda con el correspondiente nuevo
+     * valor. 
+     * %3. Si el producto existe y el número de unidades a añadir es igual
+     * al de la tienda, elimina este último y actualiza el carro con el nuevo
+     * valor.
+     */
     private void añadirUBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirUBActionPerformed
         int fila = catalogoTable.getSelectedRow();
         int rows = 0;
@@ -308,7 +354,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                     excepcionAñadirUnidades(product1, numUnidades);
                     if (numUnidades == product1.getNumUnid()) {
                         product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
-                        tienda.deleteProducto(product2.getNome());                        
+                        tienda.deleteProducto(product2.getNome());
                         rows = carro.updateProducto(product2);
                     } else if (numUnidades != product1.getNumUnid()) {
                         product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
@@ -319,9 +365,11 @@ public class ClienteTienda extends javax.swing.JFrame {
                 } else {
                     IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
                 }
-                
+
             } catch (Excepcion_Definida e) {
                 IO.devolver(IO.VENTANA, e.getMessage());
+            } catch (NumberFormatException e) {
+                IO.devolver(IO.VENTANA, "No has introducido ningún valor");
             }
             IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
             cargarTablaCatalogo();
@@ -364,6 +412,12 @@ public class ClienteTienda extends javax.swing.JFrame {
     }
 
     //Trata que el número de unidades no pueda ser negativo y que elnúmero de unidades que queramos añadir al carro no pueda ser mayor de las unidades que hay en el catalogo.
+    /**
+     *
+     * @param product
+     * @param numUnid
+     * @throws Excepcion_Definida
+     */
     public void excepcionAñadirUnidades(Producto product, int numUnid) throws Excepcion_Definida {
         if (product.getNumUnid() < numUnid & numUnid > 0) {
             throw new Excepcion_Definida("Esa cantidad es mayor de la que hay en la tienda.");
@@ -373,6 +427,12 @@ public class ClienteTienda extends javax.swing.JFrame {
     }
 
     //Trata que el número de unidades que queremos quitar no sea mayor del que hay y que este no sea un número negativo.
+    /**
+     *
+     * @param product
+     * @param numUnid
+     * @throws Excepcion_Definida
+     */
     public void excepcionQuitarUnidades(Producto product, int numUnid) throws Excepcion_Definida {
         if (product.getNumUnid() < numUnid) {
             throw new Excepcion_Definida("Esa cantidad es mayor de la que hay en el carro.");

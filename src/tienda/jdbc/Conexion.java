@@ -13,23 +13,21 @@ import java.sql.SQLException;
  * @author finfanterodal
  */
 public class Conexion {
-     //private static final String JDBC_DRIVER = "org.sqlite.JDBC";
+    //private static final String JDBC_DRIVER = "org.sqlite.JDBC";
+
     private static final String JDBC_URL = "jdbc:sqlite:tienda.db";
     private static Driver driver = null;
 
     //Carga del driver y conexión
-
     /**
      *
-     * @return
-     * @throws SQLException
+     * @return @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL);
     }
 
     //Close objeto ResulSet
-
     /**
      *
      * @param rs
@@ -43,7 +41,7 @@ public class Conexion {
             sqle.printStackTrace();
         }
     }
-  //Cerramos el objeto PreparedStatement
+    //Cerramos el objeto PreparedStatement
 
     /**
      *
@@ -94,10 +92,5 @@ public class Conexion {
             System.out.println(e.getMessage());
         }
     }
-    
-    
-    
-    
-    
-    
+
 }

@@ -170,7 +170,7 @@ public class Usuario extends javax.swing.JFrame {
         String passwd = tPasswd.getText();
         boolean cliente = m.buscarUsuario(user, passwd, "cliente");
         if (cliente == true) {
-            JOptionPane.showMessageDialog(null, "Encontrado");
+            JOptionPane.showMessageDialog(null, "Conectado");
             ClienteTienda cliente1 = new ClienteTienda();
             cliente1.setVisible(true);
             this.setVisible(false);
@@ -187,7 +187,7 @@ public class Usuario extends javax.swing.JFrame {
         String passwd = tPasswd.getText();
         boolean admin = m.buscarUsuario(user, passwd, "admin");
         if (admin == true) {
-            JOptionPane.showMessageDialog(null, "Encontrado");
+            JOptionPane.showMessageDialog(null, "Conectado");
             AdministracionTienda admin1 = new AdministracionTienda();
             admin1.setVisible(true);
             this.setVisible(false);

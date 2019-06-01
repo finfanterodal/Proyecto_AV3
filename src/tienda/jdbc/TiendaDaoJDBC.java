@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tienda.dto.Producto;
 
@@ -20,27 +18,33 @@ import tienda.dto.Producto;
  */
 public class TiendaDaoJDBC {
 
-    //Utilizar la misma conexion para todas las acciones
     /**
-     *
-     * @param userConn
+     * Constructor sin parámetros.
      */
     public TiendaDaoJDBC() {
     }
 
+    /**
+     * Constructor con parámetros.
+     *
+     * @param userConn
+     */
     public TiendaDaoJDBC(Connection userConn) {
         this.userConn = userConn;
     }
 
+    /**
+     * Atributos.
+     */
     private Connection userConn;
-
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
     private String sql_SELECT;
 
     /**
-     * Creamos las tablas que utilizamos en nuestra base de datos.
+     * Creamos las tablas que utilizamos en nuestra base de datos, tienda y
+     * carro.
      *
      *
      */
@@ -84,8 +88,10 @@ public class TiendaDaoJDBC {
 
     /**
      * Este método añade un nuevo producto a la tabla existente en la base de
-     * datos. Si el nombre de este producto ya existe saltará una excepción y no
-     * se podrá introducir.
+     * datos.
+     *
+     * @param producto
+     * @return
      */
     public int insertProducto(Producto producto) {
         Connection conn = null;
@@ -117,8 +123,7 @@ public class TiendaDaoJDBC {
 
     /**
      * Este método permite modificar el precio y el número de unidades del
-     * producto en la base de datos. Si el número de unidades que le asignamos
-     * es 0 se eleiminará.
+     * producto en la base de datos..
      *
      * @param producto
      * @return
@@ -156,6 +161,8 @@ public class TiendaDaoJDBC {
     /**
      * Este método permite eliminar un producto de la base de datos.
      *
+     * @param nombre
+     * @return
      */
     public int deleteProducto(String nombre) {
         Connection conn = null;
@@ -172,7 +179,7 @@ public class TiendaDaoJDBC {
             stmt.setString(1, nombre);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, "Error al borrar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al borrar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
             if (this.userConn == null) {
@@ -183,7 +190,7 @@ public class TiendaDaoJDBC {
     }
 
     /**
-     * Añadimos datos de un fichero a la tabla de Generos.
+     * Añadimos datos de un fichero a la tabla tienda.
      *
      *
      */
@@ -225,9 +232,10 @@ public class TiendaDaoJDBC {
 
     /**
      *
+     * Este método los datos de la tabla tienda de la base de datos en un
+     * ArrayList y lo devuelve.
      *
-     *
-     * @return @throws java.sql.SQLException
+     * @return
      */
     public ArrayList<Producto> refreshArrayProductoTienda() {
         ArrayList<Producto> productos = new ArrayList<Producto>();
@@ -261,6 +269,13 @@ public class TiendaDaoJDBC {
         return productos;
     }
 
+    /**
+     * Este método selecciona según un índice int dado el valor de la variable
+     * String tipo y la devuelve.
+     *
+     * @param opt
+     * @return
+     */
     public String selectTipo(int opt) {
         String opcion = "";
         switch (opt) {
@@ -286,6 +301,13 @@ public class TiendaDaoJDBC {
         return opcion;
     }
 
+    /**
+     * Este método busca un producto en la base de datos dado su nombre y lo
+     * devuelve.
+     *
+     * @param nombre
+     * @return
+     */
     public Producto buscarProducto(String nombre) {
         int numUnidades = 0;
         sql_SELECT = "SELECT nombre,precio,numUnidades,tipo FROM tienda WHERE nombre = ?";
