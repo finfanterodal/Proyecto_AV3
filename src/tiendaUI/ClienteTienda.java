@@ -296,19 +296,19 @@ public class ClienteTienda extends javax.swing.JFrame {
             } else {
                 Producto product1 = new Producto(String.valueOf(carroTable.getValueAt(fila, 0)), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()), String.valueOf(carroTable.getValueAt(fila, 3)));
                 Producto productoaux = tienda.buscarProducto(product1.getNome());
-                Producto product2;
                 int rows = 0;
                 excepcionAñadirUnidades(product1, numUnidades);
                 if (productoaux != null) {
-                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), productoaux.getNumUnid() + numUnidades, carroTable.getValueAt(fila, 3).toString());
-                    tienda.updateProducto(product2);
+                    productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
+                    tienda.updateProducto(productoaux);
                 } else {
-                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), product1.getNumUnid(), carroTable.getValueAt(fila, 3).toString());
-                    tienda.insertProducto(product2);
+                    productoaux=product1;
+                    productoaux.setNumUnid(numUnidades);
+                    tienda.insertProducto(productoaux);
                 }
                 if (product1.getNumUnid() != numUnidades) {
-                    product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), product1.getNumUnid() - numUnidades, carroTable.getValueAt(fila, 3).toString());
-                    rows = carro.updateProducto(product2);
+                    product1.setNumUnid(product1.getNumUnid()-numUnidades);
+                    rows = carro.updateProducto(product1);
                 } else {
                     rows = carro.deleteProducto(product1.getNome());
                 }
@@ -348,19 +348,18 @@ public class ClienteTienda extends javax.swing.JFrame {
             try {
                 int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
                 Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
-                Producto product2;
                 Producto productoaux = carro.buscarProducto(product1.getNome());
                 if (productoaux != null) {
                     excepcionAñadirUnidades(product1, numUnidades);
                     if (numUnidades == product1.getNumUnid()) {
-                        product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
-                        tienda.deleteProducto(product2.getNome());
-                        rows = carro.updateProducto(product2);
+                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
+                        tienda.deleteProducto(product1.getNome());
+                        rows = carro.updateProducto(productoaux);
                     } else if (numUnidades != product1.getNumUnid()) {
-                        product2 = new Producto(carroTable.getValueAt(fila, 0).toString(), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()) + numUnidades, carroTable.getValueAt(fila, 3).toString());
+                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
                         product1.setNumUnid(product1.getNumUnid() - numUnidades);
                         tienda.updateProducto(product1);
-                        rows = carro.updateProducto(product2);
+                        rows = carro.updateProducto(productoaux);
                     }
                 } else {
                     IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
