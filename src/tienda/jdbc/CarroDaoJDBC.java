@@ -214,4 +214,41 @@ public class CarroDaoJDBC {
 
         return productoaux;
     }
+    
+    /**
+     *Este método busca el precio y el número de unidades de los productos 
+     * del carro, y calcula y devuelve el precio total de la compra
+     * 
+     * @return
+     */
+    public double calcularPrecio() {
+        double precio = 0;
+        sql_SELECT = "SELECT precio,numUnidades FROM carro";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.prepareStatement(sql_SELECT);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                precio = precio + (rs.getDouble("precio") * rs.getInt("numUnidades"));
+            }
+            return precio;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al calcular el precio.", "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+        return precio;
+    }
+    
 }
