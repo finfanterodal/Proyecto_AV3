@@ -273,8 +273,9 @@ public class ClienteTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarBActionPerformed
 
     private void confirmarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarBActionPerformed
-
-
+        this.setVisible(false);
+        Confirmacion conf = new Confirmacion();
+        conf.setVisible(true);
     }//GEN-LAST:event_confirmarBActionPerformed
 
     /**

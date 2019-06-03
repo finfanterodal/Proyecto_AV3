@@ -52,7 +52,8 @@ public class TiendaDaoJDBC {
 
         Connection conn = null;
         Statement stmt = null;
-
+        String sqlDrop1 = "DROP TABLE IF EXISTS tienda;\n";
+        String sqlDrop2 = "DROP TABLE IF EXISTS carro;\n";
         String sql1 = "CREATE TABLE IF NOT EXISTS tienda (\n"
                 + " nombre text PRIMARY KEY,\n"
                 + " precio real NOT NULL,\n"
@@ -73,7 +74,9 @@ public class TiendaDaoJDBC {
                 conn = Conexion.getConnection();
             }
             stmt = conn.createStatement();
-
+            //borrar tablas
+            stmt.execute(sqlDrop1);
+            stmt.execute(sqlDrop2);
             // create new tables
             stmt.execute(sql1);
             stmt.execute(sql2);
