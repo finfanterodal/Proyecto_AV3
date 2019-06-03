@@ -119,6 +119,7 @@ public class Confirmacion extends javax.swing.JFrame {
         cd.borrarTablaCarro();
         JOptionPane.showMessageDialog(null, "Gracias por su compra");
         this.setVisible(false);
+        System.exit(1);
     }//GEN-LAST:event_bSiActionPerformed
 
     /**
