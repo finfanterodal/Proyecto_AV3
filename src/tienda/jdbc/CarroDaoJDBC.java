@@ -251,4 +251,31 @@ public class CarroDaoJDBC {
         return precio;
     }
     
+    
+    
+    /**
+     * Borramos tabla carro.
+     *
+     */
+    public void borrarTablaCarro() {
+        Connection conn = null;
+        Statement stmt = null;
+        String sqlDrop2 = "DELETE FROM carro;\n";
+        try {
+            if (this.userConn != null) {
+                conn = this.userConn;
+            } else {
+                conn = Conexion.getConnection();
+            }
+            stmt = conn.createStatement();
+            //borrar tablas
+            stmt.execute(sqlDrop2);
+        } catch (SQLException ex) {
+
+        } finally {
+            if (this.userConn == null) {
+                Conexion.close(conn);
+            }
+        }
+    }
 }

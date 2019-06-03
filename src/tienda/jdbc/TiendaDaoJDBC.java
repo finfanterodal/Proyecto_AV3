@@ -55,7 +55,7 @@ public class TiendaDaoJDBC {
         String sqlDrop1 = "DROP TABLE IF EXISTS tienda;\n";
         String sqlDrop2 = "DROP TABLE IF EXISTS carro;\n";
         String sql1 = "CREATE TABLE IF NOT EXISTS tienda (\n"
-                + " nombre text PRIMARY KEY,\n"
+                + " nombre text PRIMARY KEY NOT NULL,\n"
                 + " precio real NOT NULL,\n"
                 + " numUnidades integer NOT NULL,\n"
                 + " tipo text NOT NULL \n"
