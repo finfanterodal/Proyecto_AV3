@@ -25,6 +25,8 @@ public class ClienteTienda extends javax.swing.JFrame {
      */
     public ClienteTienda() {
         initComponents();
+        this.setTitle("Tienda.");
+        this.setLocation(400, 300);
         cargarTablaCatalogo();
         cargarTablaCarro();
     }

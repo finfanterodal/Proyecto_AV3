@@ -11,6 +11,8 @@ public class Confirmacion extends javax.swing.JFrame {
      */
     public Confirmacion() {
         initComponents();
+        this.setTitle("Confirmación");
+        this.setLocation(400, 300);
     }
 
     /**
