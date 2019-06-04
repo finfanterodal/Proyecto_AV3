@@ -10,11 +10,13 @@ import tienda.jdbc.CarroDaoJDBC;
 public class Confirmacion extends javax.swing.JFrame {
 
     CarroDaoJDBC cd = new CarroDaoJDBC();
+
     /**
      * Creates new form Confirmacion
      */
     public Confirmacion() {
         initComponents();
+        this.setLocationRelativeTo(null);
         tPrecio.setText(cd.calcularPrecio() + " €");
     }
 
@@ -54,6 +56,7 @@ public class Confirmacion extends javax.swing.JFrame {
 
         tPrecio.setEditable(false);
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Dinero a pagar:");
 
         jLabel2.setText("¿Desea confirmar su compra?");
@@ -63,7 +66,7 @@ public class Confirmacion extends javax.swing.JFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(bSi, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -84,7 +87,7 @@ public class Confirmacion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -94,6 +97,8 @@ public class Confirmacion extends javax.swing.JFrame {
                     .addComponent(bNo))
                 .addGap(42, 42, 42))
         );
+
+        jLabel1.getAccessibleContext().setAccessibleName("Coste Total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

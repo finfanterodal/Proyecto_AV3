@@ -1,6 +1,9 @@
 package tiendaUI;
 
+import Excepciones.Excepcion_Definida;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import tienda.dto.Producto;
@@ -23,7 +26,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
     public AdministracionTienda() {
         initComponents();
         this.setTitle("Administración tienda.");
-        this.setLocation(400, 300);
+        this.setLocationRelativeTo(null);
         cargarTablaCatalogo();
         cargarTablaUsuarios();
     }
@@ -65,11 +68,12 @@ public class AdministracionTienda extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Precio", "nº Unidades", "Tipo"
+                "Nombre", "Precio/unidad (€)", "nº Unidades", "Tipo"
             }
         ));
         jScrollPane2.setViewportView(catalogoTable);
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setText("Productos en Tienda:");
 
         añadirB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/carro.png"))); // NOI18N
@@ -86,12 +90,16 @@ public class AdministracionTienda extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("Nombre");
 
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Precio");
 
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("nºUnidades");
 
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel5.setText("Tipo");
 
         modificarB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pruebas.png"))); // NOI18N
@@ -132,24 +140,23 @@ public class AdministracionTienda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 603, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(valorNom, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(valorPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(valorUnidades))
+                            .addComponent(jLabel2)
+                            .addComponent(valorNom, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(valorPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(valorUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addComponent(tipoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,16 +166,24 @@ public class AdministracionTienda extends javax.swing.JFrame {
                                 .addComponent(eliminarB)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(modificarB)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(243, 243, 243)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(jLabel1)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -185,7 +200,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(valorNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(valorPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +212,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
                                     .addComponent(añadirB)
                                     .addComponent(jButton1)
                                     .addComponent(modificarB))))))
-                .addGap(41, 41, 41))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -206,7 +221,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,12 +235,15 @@ public class AdministracionTienda extends javax.swing.JFrame {
 
         try {
             String tipo = tienda.selectTipo(tipoCombo.getSelectedIndex());
+            excepcionNegativo(Double.parseDouble(valorPrecio.getText()), Integer.parseInt(valorUnidades.getText()));
             int rows = tienda.insertProducto(new Producto(valorNom.getText(), Double.parseDouble(valorPrecio.getText()), Integer.parseInt(valorUnidades.getText()), tipo));
             IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
         } catch (NullPointerException e) {
             IO.devolver(IO.VENTANA, "No has introducido valores.");
         } catch (NumberFormatException ex) {
             IO.devolver(IO.VENTANA, "No has introducido bien valores.");
+        } catch (Excepcion_Definida ex) {
+            IO.devolver(IO.VENTANA, ex.getMessage());
         }
         cargarTablaCatalogo();
     }//GEN-LAST:event_añadirBActionPerformed
@@ -249,23 +267,28 @@ public class AdministracionTienda extends javax.swing.JFrame {
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
         } else {
-            String nombre = catalogoTable.getValueAt(fila, 0).toString();
-            double precio = IO.introducirDouble(IO.VENTANA, "Nuevo precio del producto:");
-            int numUnidades = IO.introducirInt(IO.VENTANA, "Cantidad que deseas introducir.");
-            String tipo = catalogoTable.getValueAt(fila, 3).toString();
-            int rows = tienda.updateProducto(new Producto(nombre, precio, numUnidades, tipo));
-            IO.devolver(IO.VENTANA, "Registros modificados correctamente: " + rows);
-            cargarTablaCatalogo();
+            try {
+                String nombre = catalogoTable.getValueAt(fila, 0).toString();
+                double precio = IO.introducirDouble(IO.VENTANA, "Nuevo precio del producto:");
+                int numUnidades = IO.introducirInt(IO.VENTANA, "Cantidad que deseas introducir.");
+                String tipo = catalogoTable.getValueAt(fila, 3).toString();
+                excepcionNegativo(precio, numUnidades);
+                int rows = tienda.updateProducto(new Producto(nombre, precio, numUnidades, tipo));
+                IO.devolver(IO.VENTANA, "Registros modificados correctamente: " + rows);
+                cargarTablaCatalogo();
+            } catch (Excepcion_Definida ex) {
+                IO.devolver(IO.VENTANA, ex.getMessage());
+            }
         }
 
     }//GEN-LAST:event_modificarBActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    this.setVisible(false);
-    Usuario user=new Usuario();
-    user.setVisible(true);
+        this.setVisible(false);
+        Usuario user = new Usuario();
+        user.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-  
+
     /**
      * Recojo los datos del ArrayList actualizado y los añado a la tabla de la
      * interfaz.
@@ -299,6 +322,19 @@ public class AdministracionTienda extends javax.swing.JFrame {
             model.addRow(row);
         }
 
+    }
+
+    //Trata que el que  no sean un números negativo.
+    /**
+     *
+     * @param numUnidades
+     * @param precio
+     * @throws Excepcion_Definida
+     */
+    public void excepcionNegativo(double precio, int numUnidades) throws Excepcion_Definida {
+        if (numUnidades < 0 || precio < 0) {
+            throw new Excepcion_Definida("El valor no puede ser negativo.");
+        }
     }
 
     /**

@@ -27,7 +27,7 @@ public class ClienteTienda extends javax.swing.JFrame {
     public ClienteTienda() {
         initComponents();
         this.setTitle("Tienda.");
-        this.setLocation(400, 300);
+        this.setLocationRelativeTo(null);
         cargarTablaCatalogo();
         cargarTablaCarro();
     }
@@ -53,7 +53,6 @@ public class ClienteTienda extends javax.swing.JFrame {
         eliminarB = new javax.swing.JButton();
         añadirUB = new javax.swing.JButton();
         quitarB = new javax.swing.JButton();
-        refresh = new javax.swing.JButton();
         confirmarB = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -71,6 +70,7 @@ public class ClienteTienda extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Catálogo:");
 
         catalogoTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -78,11 +78,12 @@ public class ClienteTienda extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Precio", "nº Unidades", "Tipo"
+                "Nombre", "Precio/unidad (€)", "nº Unidades", "Tipo"
             }
         ));
         jScrollPane2.setViewportView(catalogoTable);
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("Carro:");
 
         carroTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -90,7 +91,7 @@ public class ClienteTienda extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Precio", "nº Unidades", "Tipo"
+                "Nombre", "Precio/unidad (€)", "nº Unidades", "Tipo"
             }
         ));
         jScrollPane1.setViewportView(carroTable);
@@ -123,13 +124,6 @@ public class ClienteTienda extends javax.swing.JFrame {
             }
         });
 
-        refresh.setText("Refresh");
-        refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
-            }
-        });
-
         confirmarB.setText("Confirmar");
         confirmarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,9 +152,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                                 .addComponent(añadirUB)
                                 .addGap(26, 26, 26)
                                 .addComponent(quitarB)
-                                .addGap(18, 18, 18)
-                                .addComponent(refresh)
-                                .addGap(18, 18, 18)
+                                .addGap(121, 121, 121)
                                 .addComponent(confirmarB)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -168,21 +160,20 @@ public class ClienteTienda extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 39, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(añadirB)
                     .addComponent(eliminarB)
                     .addComponent(añadirUB)
                     .addComponent(quitarB)
-                    .addComponent(refresh)
                     .addComponent(confirmarB))
                 .addGap(37, 37, 37))
         );
@@ -290,14 +281,6 @@ public class ClienteTienda extends javax.swing.JFrame {
         Confirmacion conf = new Confirmacion();
         conf.setVisible(true);
     }//GEN-LAST:event_confirmarBActionPerformed
-
-    /**
-     * Carga los datos desde la base de datos a las dos tablas.
-     */
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-        cargarTablaCatalogo();
-        cargarTablaCarro();
-    }//GEN-LAST:event_refreshActionPerformed
 
     /**
      * Este método quita unidades del producto seleccionado del carro cumpliendo las siguientes condiciones:
@@ -511,6 +494,5 @@ public class ClienteTienda extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton quitarB;
-    private javax.swing.JButton refresh;
     // End of variables declaration//GEN-END:variables
 }
