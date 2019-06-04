@@ -51,7 +51,6 @@ public class ClienteTienda extends javax.swing.JFrame {
         carroTable = new javax.swing.JTable();
         añadirB = new javax.swing.JButton();
         eliminarB = new javax.swing.JButton();
-        añadirUB = new javax.swing.JButton();
         quitarB = new javax.swing.JButton();
         confirmarB = new javax.swing.JButton();
 
@@ -96,35 +95,28 @@ public class ClienteTienda extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(carroTable);
 
-        añadirB.setText("Añadir");
+        añadirB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/añadirUnidades2.png"))); // NOI18N
         añadirB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 añadirBActionPerformed(evt);
             }
         });
 
-        eliminarB.setText("Eliminar");
+        eliminarB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminarProducto.png"))); // NOI18N
         eliminarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarBActionPerformed(evt);
             }
         });
 
-        añadirUB.setText("Añadir Unidades");
-        añadirUB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                añadirUBActionPerformed(evt);
-            }
-        });
-
-        quitarB.setText("Quitar Unidades");
+        quitarB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/quitarUnidades.png"))); // NOI18N
         quitarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quitarBActionPerformed(evt);
             }
         });
 
-        confirmarB.setText("Confirmar");
+        confirmarB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/confirmar.png"))); // NOI18N
         confirmarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmarBActionPerformed(evt);
@@ -138,24 +130,20 @@ public class ClienteTienda extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(añadirB)
-                                .addGap(18, 18, 18)
-                                .addComponent(eliminarB)
-                                .addGap(27, 27, 27)
-                                .addComponent(añadirUB)
-                                .addGap(26, 26, 26)
-                                .addComponent(quitarB)
-                                .addGap(121, 121, 121)
-                                .addComponent(confirmarB)))
+                            .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(49, 49, 49)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(quitarB, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(eliminarB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(añadirB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(confirmarB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,26 +151,34 @@ public class ClienteTienda extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(añadirB, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(eliminarB, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 39, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(añadirB)
-                    .addComponent(eliminarB)
-                    .addComponent(añadirUB)
-                    .addComponent(quitarB)
-                    .addComponent(confirmarB))
-                .addGap(37, 37, 37))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(quitarB, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(confirmarB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
+
+        eliminarB.getAccessibleContext().setAccessibleName("");
+        eliminarB.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,13 +193,21 @@ public class ClienteTienda extends javax.swing.JFrame {
      * dadas las siguientes condiciones: 
      * 1. Si el producto ya existiese en el
      * carro no se podrían añadir unidades desde aquí. 
-     * 2. Si el producto no
-     * existe y aparte son todas las unidades del producto que hay en el
+     * 2. Si el producto no existe y aparte son todas las unidades del producto que hay en el
      * catálogo, se inserta este en el carro y se borra del catálogo. 
-     * 3.Si las
-     * unidades que se quieren añadir son menores de las que hay en el catálogo,
+     * 3.Si las unidades que se quieren añadir son menores de las que hay en el catálogo,
      * se inserta el producto en el carro y se modifica el producto en el
      * catálogo restándole dichas unidades.
+     * 4. Si del producto del que se quieren añadir unidades no existe en el carro,
+     * deberemos utilizar otr botón. 
+     * 5. Si el producto existe y el número de
+     * unidades es menor del que hay en la tienda(catálogo) nos actualiza el
+     * producto del carro y también el de la tienda con el correspondiente nuevo
+     * valor. 
+     * 6. Si el producto existe y el número de unidades a añadir es igual
+     * al de la tienda, elimina este último y actualiza el carro con el nuevo
+     * valor.
+     * 
      */
     private void añadirBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBActionPerformed
 
@@ -216,6 +220,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                 int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
                 Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
                 Producto productoaux = carro.buscarProducto(product1.getNome());
+
                 if (productoaux == null) {
                     excepcionAñadirUnidades(product1, numUnidades);
                     if (numUnidades == product1.getNumUnid()) {
@@ -227,8 +232,18 @@ public class ClienteTienda extends javax.swing.JFrame {
                         tienda.updateProducto(productoaux);
                         rows = carro.insertProducto(product1, numUnidades);
                     }
-                } else {
-                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de añadir unidades.");
+                } else if (productoaux != null) {
+                    excepcionAñadirUnidades(product1, numUnidades);
+                    if (numUnidades == product1.getNumUnid()) {
+                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
+                        tienda.deleteProducto(product1.getNome());
+                        rows = carro.updateProducto(productoaux);
+                    } else if (numUnidades != product1.getNumUnid()) {
+                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
+                        product1.setNumUnid(product1.getNumUnid() - numUnidades);
+                        tienda.updateProducto(product1);
+                        rows = carro.updateProducto(productoaux);
+                    }
                 }
 
             } catch (Excepcion_Definida e) {
@@ -328,55 +343,6 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_quitarBActionPerformed
 
-    /**
-     * Este método añade unidades del producto seleccionado de la
-     * tienda(catalogo) al carro cumpliendo las siguientes condiciones:
-     * 1. Si del producto del que se quieren añadir unidades no existe en el carro,
-     * deberemos utilizar otr botón. 
-     * 2. Si el producto existe y el número de
-     * unidades es menor del que hay en la tienda(catálogo) nos actualiza el
-     * producto del carro y también el de la tienda con el correspondiente nuevo
-     * valor. 
-     * %3. Si el producto existe y el número de unidades a añadir es igual
-     * al de la tienda, elimina este último y actualiza el carro con el nuevo
-     * valor.
-     */
-    private void añadirUBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirUBActionPerformed
-        int fila = catalogoTable.getSelectedRow();
-        int rows = 0;
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
-        } else {
-            try {
-                int numUnidades = IO.introducirInt(IO.VENTANA, "Introduce la cantidad que deseas:");
-                Producto product1 = new Producto(String.valueOf(catalogoTable.getValueAt(fila, 0)), Double.parseDouble(catalogoTable.getValueAt(fila, 1).toString()), Integer.parseInt(catalogoTable.getValueAt(fila, 2).toString()), String.valueOf(catalogoTable.getValueAt(fila, 3)));
-                Producto productoaux = carro.buscarProducto(product1.getNome());
-                if (productoaux != null) {
-                    excepcionAñadirUnidades(product1, numUnidades);
-                    if (numUnidades == product1.getNumUnid()) {
-                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
-                        tienda.deleteProducto(product1.getNome());
-                        rows = carro.updateProducto(productoaux);
-                    } else if (numUnidades != product1.getNumUnid()) {
-                        productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
-                        product1.setNumUnid(product1.getNumUnid() - numUnidades);
-                        tienda.updateProducto(product1);
-                        rows = carro.updateProducto(productoaux);
-                    }
-                } else {
-                    IO.devolver(IO.VENTANA, "Para añadir un producto nuevo, debe utilizar el botón Añadir");
-                }
-
-            } catch (Excepcion_Definida e) {
-                IO.devolver(IO.VENTANA, e.getMessage());
-            } catch (NumberFormatException e) {
-                IO.devolver(IO.VENTANA, "No has introducido ningún valor");
-            }
-            IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
-            cargarTablaCatalogo();
-            cargarTablaCarro();
-        }
-    }//GEN-LAST:event_añadirUBActionPerformed
 
     /**
      * Recojo los datos del ArrayList actualizado y los añado a la tabla de la
@@ -482,7 +448,6 @@ public class ClienteTienda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton añadirB;
-    private javax.swing.JButton añadirUB;
     private javax.swing.JTable carroTable;
     private javax.swing.JTable catalogoTable;
     private javax.swing.JButton confirmarB;
