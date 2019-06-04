@@ -139,7 +139,7 @@ public class CarroDaoJDBC {
     }
 
     /**
-     * Este método carga los datos existentes en la base dae datos de la tabla
+     * Este método carga los datos existentes en la base de datos de la tabla
      * en cuestión en un ArrayList y lo devuelve.
      *
      * @return productos

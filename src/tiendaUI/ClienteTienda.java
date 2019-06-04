@@ -381,7 +381,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                         rows = carro.updateProducto(productoaux);
                     }
                 } else {
-                    IO.devolver(IO.VENTANA, "El producto ya se encuentra en su carro, si desea añadir unidades utilice el botón de su derecha.");
+                    IO.devolver(IO.VENTANA, "Para añadir un producto nuevo, debe utilizar el botón Añadir");
                 }
 
             } catch (Excepcion_Definida e) {
