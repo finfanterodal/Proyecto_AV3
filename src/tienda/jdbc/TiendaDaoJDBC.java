@@ -61,7 +61,7 @@ public class TiendaDaoJDBC {
                 + " tipo text NOT NULL \n"
                 + ");";
         String sql2 = "CREATE TABLE IF NOT EXISTS carro (\n"
-                + " nombre text PRIMARY KEY,\n"
+                + " nombre text PRIMARY KEY NOT NULL,\n"
                 + " precio real NOT NULL,\n"
                 + " numUnidades integer NOT NULL,\n"
                 + " tipo text NOT NULL \n"

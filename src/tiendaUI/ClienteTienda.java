@@ -321,14 +321,14 @@ public class ClienteTienda extends javax.swing.JFrame {
                     productoaux.setNumUnid(productoaux.getNumUnid() + numUnidades);
                     tienda.updateProducto(productoaux);
                 } else {
-                    productoaux=product1;
-                    productoaux.setNumUnid(numUnidades);
-                    tienda.insertProducto(productoaux);
+                    Producto product3 = new Producto(String.valueOf(carroTable.getValueAt(fila, 0)), Double.parseDouble(carroTable.getValueAt(fila, 1).toString()), Integer.parseInt(carroTable.getValueAt(fila, 2).toString()), String.valueOf(carroTable.getValueAt(fila, 3)));
+                    product3.setNumUnid(numUnidades);
+                    tienda.insertProducto(product3);
                 }
-                if (product1.getNumUnid() != numUnidades) {
+                if (product1.getNumUnid() > numUnidades) {
                     product1.setNumUnid(product1.getNumUnid()-numUnidades);
                     rows = carro.updateProducto(product1);
-                } else {
+                } else if(product1.getNumUnid() == numUnidades){
                     rows = carro.deleteProducto(product1.getNome());
                 }
 
