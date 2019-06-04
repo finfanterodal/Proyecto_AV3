@@ -25,18 +25,8 @@ public class TiendaDaoJDBC {
     }
 
     /**
-     * Constructor con parámetros.
-     *
-     * @param userConn
-     */
-    public TiendaDaoJDBC(Connection userConn) {
-        this.userConn = userConn;
-    }
-
-    /**
      * Atributos.
      */
-    private Connection userConn;
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
@@ -55,24 +45,20 @@ public class TiendaDaoJDBC {
         String sqlDrop1 = "DROP TABLE IF EXISTS tienda;\n";
         String sqlDrop2 = "DROP TABLE IF EXISTS carro;\n";
         String sql1 = "CREATE TABLE IF NOT EXISTS tienda (\n"
-                + " nombre text PRIMARY KEY NOT NULL,\n"
+                + " nombre text NOT NULL PRIMARY KEY,\n"
                 + " precio real NOT NULL,\n"
                 + " numUnidades integer NOT NULL,\n"
                 + " tipo text NOT NULL \n"
                 + ");";
         String sql2 = "CREATE TABLE IF NOT EXISTS carro (\n"
-                + " nombre text PRIMARY KEY NOT NULL,\n"
+                + " nombre text NOT NULL PRIMARY KEY,\n"
                 + " precio real NOT NULL,\n"
                 + " numUnidades integer NOT NULL,\n"
                 + " tipo text NOT NULL \n"
                 + ");";
 
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.createStatement();
             //borrar tablas
             stmt.execute(sqlDrop1);
@@ -83,9 +69,7 @@ public class TiendaDaoJDBC {
         } catch (SQLException ex) {
 
         } finally {
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
     }
 
@@ -102,11 +86,7 @@ public class TiendaDaoJDBC {
         int rows = 0;
         sql_INSERT = "INSERT INTO tienda(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_INSERT);
             stmt.setString(1, producto.getNome());
             stmt.setDouble(2, producto.getPrecio());
@@ -117,9 +97,7 @@ public class TiendaDaoJDBC {
             JOptionPane.showMessageDialog(null, "Error al insertar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -139,11 +117,7 @@ public class TiendaDaoJDBC {
                 + "numUnidades = ? "
                 + "WHERE nombre = ?";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_UPDATE);
             //Libros   
             stmt.setDouble(1, producto.getPrecio());
@@ -154,9 +128,7 @@ public class TiendaDaoJDBC {
             JOptionPane.showMessageDialog(null, "Error al buscar los modificar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -173,21 +145,14 @@ public class TiendaDaoJDBC {
         int rows = 0;
         sql_DELETE = "DELETE FROM tienda WHERE nombre = ?";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_DELETE);
             stmt.setString(1, nombre);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al borrar los datos en el catalogo.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
-            Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -203,11 +168,7 @@ public class TiendaDaoJDBC {
         Scanner sc = null;
         sql_INSERT = "INSERT INTO tienda(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_INSERT);
             File fichero = new File("Catalogo.txt");
             sc = new Scanner(fichero);
@@ -226,9 +187,7 @@ public class TiendaDaoJDBC {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el fichero.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
 
     }
@@ -249,11 +208,7 @@ public class TiendaDaoJDBC {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -265,9 +220,7 @@ public class TiendaDaoJDBC {
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return productos;
     }
@@ -319,11 +272,7 @@ public class TiendaDaoJDBC {
         ResultSet rs = null;
         Producto productoaux = null;
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_SELECT);
             stmt.setString(1, nombre);
             rs = stmt.executeQuery();
@@ -335,9 +284,7 @@ public class TiendaDaoJDBC {
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
 
         return productoaux;

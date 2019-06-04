@@ -67,7 +67,7 @@ public class Confirmacion extends javax.swing.JFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(83, 83, 83)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(panelLayout.createSequentialGroup()
@@ -78,7 +78,7 @@ public class Confirmacion extends javax.swing.JFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bNo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -228,7 +228,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
             String tipo = tienda.selectTipo(tipoCombo.getSelectedIndex());
             excepcionNegativo(Double.parseDouble(valorPrecio.getText()), Integer.parseInt(valorUnidades.getText()));
             int rows = tienda.insertProducto(new Producto(valorNom.getText(), Double.parseDouble(valorPrecio.getText()), Integer.parseInt(valorUnidades.getText()), tipo));
-            IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
+            //IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
         } catch (NullPointerException e) {
             IO.devolver(IO.VENTANA, "No has introducido valores.");
         } catch (NumberFormatException ex) {
@@ -247,7 +247,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
         } else {
             String nombre = catalogoTable.getValueAt(fila, 0).toString();
             int rows = tienda.deleteProducto(nombre);
-            IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
+            //IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
             cargarTablaCatalogo();
         }
     }//GEN-LAST:event_eliminarBActionPerformed
@@ -265,7 +265,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
                 String tipo = catalogoTable.getValueAt(fila, 3).toString();
                 excepcionNegativo(precio, numUnidades);
                 int rows = tienda.updateProducto(new Producto(nombre, precio, numUnidades, tipo));
-                IO.devolver(IO.VENTANA, "Registros modificados correctamente: " + rows);
+                //IO.devolver(IO.VENTANA, "Registros modificados correctamente: " + rows);
                 cargarTablaCatalogo();
             } catch (Excepcion_Definida ex) {
                 IO.devolver(IO.VENTANA, ex.getMessage());

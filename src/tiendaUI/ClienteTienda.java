@@ -249,9 +249,9 @@ public class ClienteTienda extends javax.swing.JFrame {
             } catch (Excepcion_Definida e) {
                 IO.devolver(IO.VENTANA, e.getMessage());
             } catch (NumberFormatException e) {
-                IO.devolver(IO.VENTANA, "No has introducido ningún valor");
+                IO.devolver(IO.VENTANA, "No has introducido ningún valor.");
             }
-            IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
+           // IO.devolver(IO.VENTANA, "Registros insertados correctamente: " + rows);
             cargarTablaCatalogo();
             cargarTablaCarro();
         }
@@ -284,7 +284,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                 tienda.insertProducto(productoaux);
             }
             int rows = carro.deleteProducto(product1.getNome());
-            IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
+            //IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
             cargarTablaCatalogo();
             cargarTablaCarro();
         }
@@ -330,7 +330,7 @@ public class ClienteTienda extends javax.swing.JFrame {
                     rows = carro.deleteProducto(product1.getNome());
                 }
 
-                IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
+                //IO.devolver(IO.VENTANA, "Registros borrados correctamente: " + rows);
             }
         } catch (Excepcion_Definida e) {
             IO.devolver(IO.VENTANA, e.getMessage());

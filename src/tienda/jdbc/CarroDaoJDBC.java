@@ -17,19 +17,10 @@ public class CarroDaoJDBC {
     public CarroDaoJDBC() {
     }
 
-    /**
-     * Constructor que recibe un objeto de tipo Conection.
-     *
-     * @param userConn
-     */
-    public CarroDaoJDBC(Connection userConn) {
-        this.userConn = userConn;
-    }
 
     /*
     *Atributos
      */
-    private Connection userConn;
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
@@ -49,11 +40,7 @@ public class CarroDaoJDBC {
         int rows = 0;
         sql_INSERT = "INSERT INTO carro(nombre,precio,numUnidades,tipo) VALUES(?,?,?,?)";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_INSERT);
             stmt.setString(1, producto.getNome());
             stmt.setDouble(2, producto.getPrecio());
@@ -64,9 +51,7 @@ public class CarroDaoJDBC {
             JOptionPane.showMessageDialog(null, "Error al insertar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -85,11 +70,7 @@ public class CarroDaoJDBC {
                 + "numUnidades = ? "
                 + "WHERE nombre = ?";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_UPDATE);
             //Libros   
             stmt.setDouble(1, producto.getPrecio());
@@ -100,9 +81,7 @@ public class CarroDaoJDBC {
             JOptionPane.showMessageDialog(null, "Error al modificar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -119,11 +98,7 @@ public class CarroDaoJDBC {
         int rows = 0;
         sql_DELETE = "DELETE FROM carro WHERE nombre = ?";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_DELETE);
             stmt.setString(1, nombre);
             rows = stmt.executeUpdate();
@@ -131,16 +106,14 @@ public class CarroDaoJDBC {
             JOptionPane.showMessageDialog(null, "Error al borrar los datos en el carro.", "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
 
     /**
-     * Este método carga los datos existentes en la base de datos de la tabla
-     * en cuestión en un ArrayList y lo devuelve.
+     * Este método carga los datos existentes en la base de datos de la tabla en
+     * cuestión en un ArrayList y lo devuelve.
      *
      * @return productos
      */
@@ -153,11 +126,7 @@ public class CarroDaoJDBC {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -169,9 +138,7 @@ public class CarroDaoJDBC {
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return productos;
     }
@@ -191,11 +158,7 @@ public class CarroDaoJDBC {
         ResultSet rs = null;
         Producto productoaux = null;
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_SELECT);
             stmt.setString(1, nombre);
             rs = stmt.executeQuery();
@@ -207,18 +170,16 @@ public class CarroDaoJDBC {
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
 
         return productoaux;
     }
-    
+
     /**
-     *Este método busca el precio y el número de unidades de los productos 
-     * del carro, y calcula y devuelve el precio total de la compra
-     * 
+     * Este método busca el precio y el número de unidades de los productos del
+     * carro, y calcula y devuelve el precio total de la compra
+     *
      * @return
      */
     public double calcularPrecio() {
@@ -228,11 +189,7 @@ public class CarroDaoJDBC {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -244,15 +201,11 @@ public class CarroDaoJDBC {
         } finally {
             Conexion.close(rs);
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return precio;
     }
-    
-    
-    
+
     /**
      * Borramos tabla carro.
      *
@@ -262,20 +215,14 @@ public class CarroDaoJDBC {
         Statement stmt = null;
         String sqlDrop2 = "DELETE FROM carro;\n";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.createStatement();
             //borrar tablas
             stmt.execute(sqlDrop2);
         } catch (SQLException ex) {
 
         } finally {
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
     }
 }

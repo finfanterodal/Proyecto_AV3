@@ -14,24 +14,14 @@ import utilities.IO;
 public class MetodosUsuario {
 
     /**
-     * Constructor con parámetros.
-     *
-     * @param userConn
-     */
-    public MetodosUsuario(Connection userConn) {
-        this.userConn = userConn;
-    }
-
-    /**
      * Constructor sin parámetros.
      */
     public MetodosUsuario() {
     }
-    
+
     /**
      * Atributos.
      */
-    private Connection userConn;
     private String sql_INSERT;
     private String sql_UPDATE;
     private String sql_DELETE;
@@ -53,11 +43,7 @@ public class MetodosUsuario {
                 + "tipo text\n"
                 + ");";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.createStatement();
 
             // create new tables
@@ -68,9 +54,7 @@ public class MetodosUsuario {
         } catch (SQLException ex) {
 
         } finally {
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
     }
 
@@ -88,11 +72,7 @@ public class MetodosUsuario {
         int rows = 0;
         sql_INSERT = "INSERT INTO usuarios VALUES(?,?,?)";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_INSERT);
             stmt.setString(1, usuario);
             stmt.setString(2, contraseña);
@@ -103,9 +83,7 @@ public class MetodosUsuario {
             IO.devolver(IO.VENTANA, "Usuario ya existente.");
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -121,11 +99,7 @@ public class MetodosUsuario {
         int rows = 0;
         sql_INSERT = "INSERT INTO usuarios VALUES(?,?,?)";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql_INSERT);
             stmt.setString(1, "admin");
             stmt.setString(2, "admin");
@@ -135,9 +109,7 @@ public class MetodosUsuario {
             System.out.println(e.getMessage());
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
         }
         return rows;
     }
@@ -161,11 +133,7 @@ public class MetodosUsuario {
         String sql = "SELECT usuario,contraseña"
                 + " FROM usuarios WHERE usuario = ? AND contraseña = ? AND tipo = ?";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usuario);
             stmt.setString(2, contraseña);
@@ -179,9 +147,7 @@ public class MetodosUsuario {
             System.out.println(e.getMessage());
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
             return encontrado;
         }
     }
@@ -200,11 +166,7 @@ public class MetodosUsuario {
         ArrayList<String> usuarios = new ArrayList<>();
         String sql = "SELECT usuario FROM usuarios";
         try {
-            if (this.userConn != null) {
-                conn = this.userConn;
-            } else {
-                conn = Conexion.getConnection();
-            }
+            conn = Conexion.getConnection();
             stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -214,9 +176,7 @@ public class MetodosUsuario {
             System.out.println(e.getMessage());
         } finally {
             Conexion.close(stmt);
-            if (this.userConn == null) {
-                Conexion.close(conn);
-            }
+            Conexion.close(conn);
             return usuarios;
         }
     }
