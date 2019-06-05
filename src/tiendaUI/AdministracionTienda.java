@@ -121,7 +121,7 @@ public class AdministracionTienda extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(usuariosTable);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/espalda.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
